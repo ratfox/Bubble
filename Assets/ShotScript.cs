@@ -67,6 +67,11 @@ public class ShotScript : MonoBehaviour
                 collider.gameObject.GetComponent<BreakableScript>().Hit();
             }
             Destroy(this.gameObject);
+        } else if (collider.gameObject.name.StartsWith("Fog")) {
+            if (collider.gameObject.GetComponent<FogScript>().dense) {
+                collider.gameObject.GetComponent<FogScript>().Hit();
+                Destroy(this.gameObject);
+            }
         }
     }    
 }

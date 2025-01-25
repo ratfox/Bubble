@@ -108,6 +108,10 @@ public class circleControl : MonoBehaviour
             }
         } else if (collider.gameObject.name.StartsWith("Walls")) {
             GameOver();
+        } else if (collider.gameObject.name.StartsWith("Fog")) {
+            if (collider.gameObject.GetComponent<FogScript>().dense) {
+                GameOver();
+            }
         } else if (collider.gameObject.name.StartsWith("Goal")) {
             if (collider.gameObject.name.StartsWith("Goal go to ")) {
                 var nextScene = collider.gameObject.name.Substring("Goal go to ".Length);
