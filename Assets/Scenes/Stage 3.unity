@@ -135,7 +135,7 @@ GameObject:
   - component: {fileID: 402445451}
   - component: {fileID: 402445453}
   m_Layer: 0
-  m_Name: Goal go to Stage 1
+  m_Name: Goal go to Stage 4
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
