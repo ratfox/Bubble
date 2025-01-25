@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class circleControl : MonoBehaviour
 {
@@ -17,7 +18,7 @@ public class circleControl : MonoBehaviour
     public GameObject shotPrefab;
     private Vector3 movement;
     private int shotCounter = 0;
-
+    private bool alive = true;
 
     // Start is called before the first frame update
     void Start()
@@ -28,6 +29,14 @@ public class circleControl : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        if (Input.GetKeyDown(KeyCode.Return)) {
+            SceneManager.LoadScene("Stage 1");
+            gameObject.GetComponent<Renderer>().enabled = true;
+            alive = true;
+        }
+        if (!alive) {
+            return;
+        }
         var x = Input.GetAxisRaw("Horizontal");
         var y = Input.GetAxisRaw("Vertical");
         movement.x += x * keyCheatFactor;
@@ -36,6 +45,13 @@ public class circleControl : MonoBehaviour
             movement *= 0;
         }
         Move(movement);
+    }
+
+    private void GameOver() {
+        Debug.LogError("Game over!");
+        alive = false;
+        movement *= 0;
+        gameObject.GetComponent<Renderer>().enabled = false;
     }
     private void Move(Vector3 dir) {
         var pos = transform.position + dir * speedMul;
@@ -51,6 +67,9 @@ public class circleControl : MonoBehaviour
     }
 
     public void Shoot(Vector3 target) {
+        if (!alive) {
+            return;
+        }
         if (size <= shotSize + minSize) {
             return;
         }
@@ -70,6 +89,7 @@ public class circleControl : MonoBehaviour
     }
 
     private void OnTriggerEnter2D(Collider2D collider) {
+        Debug.Log("Player crash in " + collider.gameObject.name);
         if (collider.gameObject.CompareTag("Shots")) {
             var item = collider.gameObject;
             Debug.Log("Crash of " + this.gameObject.name + " and " + item.name);
@@ -87,7 +107,12 @@ public class circleControl : MonoBehaviour
                 Destroy(item);
             }
         } else if (collider.gameObject.name.StartsWith("Walls")) {
-            Destroy(this.gameObject);
+            GameOver();
+        } else if (collider.gameObject.name.StartsWith("Goal")) {
+            if (collider.gameObject.name.StartsWith("Goal go to ")) {
+                var nextScene = collider.gameObject.name.Substring("Goal go to ".Length);
+                SceneManager.LoadScene(nextScene);
+            }
         }
     }    
 }
