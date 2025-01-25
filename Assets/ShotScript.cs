@@ -18,6 +18,12 @@ public class ShotScript : MonoBehaviour
     void Start()
     {
         creationTime = Time.time;
+        Vector2 S = gameObject.GetComponent<SpriteRenderer>().sprite.bounds.size;
+        Debug.Log("SPRITE SIZE " + S);
+        Debug.Log("GAMEO SIZE " + gameObject.GetComponent<BoxCollider2D>().size);
+        Debug.Log("GAMEO CENT " + gameObject.GetComponent<BoxCollider2D>().offset);
+//        gameObject.GetComponent<BoxCollider2D>().size = S;
+ //       gameObject.GetComponent<BoxCollider2D>().center = new Vector2 ((S.x / 2), 0);
     }
 
     // Update is called once per frame

@@ -57,6 +57,7 @@ public class circleControl : MonoBehaviour
         var pos = transform.position + dir * speedMul;
         transform.position = Vector2.Lerp(transform.position, pos, Time.deltaTime);
         transform.localScale = new Vector3(size, size, size);
+        gameObject.GetComponent<CircleCollider2D>().radius = 0.5f * size;
     }
 
     void FixedUpdate() {
