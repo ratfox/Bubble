@@ -63,6 +63,9 @@ public class ShotScript : MonoBehaviour
                 Destroy(this.gameObject);
             }
         } else if (collider.gameObject.name.StartsWith("Walls")) {
+            if (collider.gameObject.name.Contains("Breakable")) {
+                collider.gameObject.GetComponent<BreakableScript>().Hit();
+            }
             Destroy(this.gameObject);
         }
     }    
