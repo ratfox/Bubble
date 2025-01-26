@@ -19,6 +19,8 @@ public class circleControl : MonoBehaviour
     private Vector3 movement;
     private int shotCounter = 0;
     private bool alive = true;
+    private Vector3 influenceSum;
+    private float influenceRate = 0.01f;
 
     // Start is called before the first frame update
     void Start()
@@ -64,6 +66,7 @@ public class circleControl : MonoBehaviour
         if (size < maxSize) {
             size = Mathf.Min(maxSize, size += sizeRegeneration);
         }
+        movement += influenceSum * influenceRate;
         movement = movement * slowDownFactor;
     }
 
@@ -119,6 +122,18 @@ public class circleControl : MonoBehaviour
                 var nextScene = collider.gameObject.name.Substring("Goal go to ".Length);
                 SceneManager.LoadScene(nextScene);
             }
+        } else if (collider.gameObject.name.StartsWith("Fan")) {
+            var influence = collider.gameObject.GetComponent<FanScript>().movement;
+            influenceSum += influence;
+            Debug.Log("Start Influence is " + influenceSum);
         }
-    }    
+    }
+    private void OnTriggerExit2D(Collider2D collider) {
+        if (collider.gameObject.name.StartsWith("Fan")) {
+            var influence = collider.gameObject.GetComponent<FanScript>().movement;
+            influenceSum -= influence;
+            Debug.Log("End Influence is " + influenceSum);
+        }
+    }
+
 }
