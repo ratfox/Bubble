@@ -14,6 +14,7 @@ public class ThreeShotScript : MonoBehaviour
     public int shotId;
     private float creationTime;
     private float duration = 10f;
+    public GameObject explosionPrefab;
 
     // Start is called before the first frame update
     void Start()
@@ -30,9 +31,15 @@ public class ThreeShotScript : MonoBehaviour
         rot *= Quaternion.Euler(0, 0, rotationSpeed * Time.deltaTime);
         transform.rotation = Quaternion.Slerp(transform.rotation, rot, 1);
         if (Time.time - creationTime > duration) {
-            Destroy(this.gameObject);
+            Explode();
         }
         Debug.Log("" + rotationSpeed + " - " + transform.rotation);
+    }
+
+    void Explode() {
+        var newItem = Instantiate(explosionPrefab);
+        newItem.transform.position = transform.position;
+        Destroy(gameObject);
     }
 
     void FixedUpdate() {
@@ -47,10 +54,10 @@ public class ThreeShotScript : MonoBehaviour
             var item = collider.gameObject;
             if (item.name.StartsWith("ThreeShot")) {
                 Destroy(item);
-                Destroy(this.gameObject);
+                Explode();
             }
         } else if (collider.gameObject.name.StartsWith("Walls")) {
-            Destroy(this.gameObject);
+            Explode();
         } else if (collider.gameObject.name.StartsWith("Fog")) {
             if (collider.gameObject.GetComponent<FogScript>().dense) {
                 collider.gameObject.GetComponent<FogScript>().Hit();

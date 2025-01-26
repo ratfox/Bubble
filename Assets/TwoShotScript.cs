@@ -54,7 +54,6 @@ public class TwoShotScript : MonoBehaviour
         } else if (collider.gameObject.name.StartsWith("Fog")) {
             if (collider.gameObject.GetComponent<FogScript>().dense) {
                 collider.gameObject.GetComponent<FogScript>().Hit();
-                Destroy(this.gameObject);
             }
         }
     }
