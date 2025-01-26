@@ -5,10 +5,12 @@ using UnityEngine;
 public class ExplosionScript : MonoBehaviour
 {
     float creationTime;
-    float duration = 2f;
+    float duration = 0.6f;
     // Start is called before the first frame update
     void Start()
     {
+        var audioSource = GetComponent<AudioSource>();
+        audioSource.Play();
         creationTime = Time.time;
     }
 
