@@ -33,7 +33,7 @@ public class ThreeShotScript : MonoBehaviour
         if (Time.time - creationTime > duration) {
             Explode();
         }
-        Debug.Log("" + rotationSpeed + " - " + transform.rotation);
+//        Debug.Log("" + rotationSpeed + " - " + transform.rotation);
     }
 
     void Explode() {
@@ -45,7 +45,6 @@ public class ThreeShotScript : MonoBehaviour
     void FixedUpdate() {
         speed = Mathf.Max(minSpeed, speed * slowDownFactor);
         rotationSpeed = rotationSpeed * rotationSlowDownFactor;
-//        Debug.Log("speed " + speed);
     }
 
     private void OnTriggerEnter2D(Collider2D collider) {

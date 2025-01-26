@@ -638,9 +638,10 @@ Transform:
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 20, y: 11, z: 1}
+  m_LocalScale: {x: 20, y: 10, z: 1}
   m_ConstrainProportionsScale: 0
-  m_Children: []
+  m_Children:
+  - {fileID: 1525177716}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &994399605
@@ -966,12 +967,12 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1525177714}
   serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: -10}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalScale: {x: 0.05, y: 0.1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
-  m_Father: {fileID: 0}
+  m_Father: {fileID: 994399604}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!68 &1525177717
 EdgeCollider2D:
@@ -1008,11 +1009,11 @@ EdgeCollider2D:
   m_Offset: {x: 0, y: 0}
   m_EdgeRadius: 0
   m_Points:
-  - {x: -9.1, y: -5}
-  - {x: 9.1, y: -5}
-  - {x: 9.1, y: 5}
-  - {x: -9.1, y: 5}
-  - {x: -9.1, y: -5}
+  - {x: -10, y: -5}
+  - {x: 10, y: -5}
+  - {x: 10, y: 5}
+  - {x: -10, y: 5}
+  - {x: -10, y: -5}
   m_AdjacentStartPoint: {x: 0, y: 0}
   m_AdjacentEndPoint: {x: 0, y: 0}
   m_UseAdjacentStartPoint: 0
@@ -1339,8 +1340,6 @@ SceneRoots:
   m_ObjectHideFlags: 0
   m_Roots:
   - {fileID: 519420032}
-  - {fileID: 994399604}
-  - {fileID: 1525177716}
   - {fileID: 1813086005}
   - {fileID: 2036817748}
   - {fileID: 892395501}
@@ -1349,3 +1348,4 @@ SceneRoots:
   - {fileID: 1320300495}
   - {fileID: 3354372842483524825}
   - {fileID: 867437891}
+  - {fileID: 994399604}

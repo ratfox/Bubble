@@ -10,6 +10,18 @@ public class bgClicker : MonoBehaviour
     void Start()
     {
         player = GameObject.Find("Player");
+        var rec = gameObject.GetComponent<SpriteRenderer>().bounds;
+        Debug.Log("RECTANGLE " + rec);
+        var bottomLeft = new Vector2(rec.min[0], rec.min[1]);
+        var topLeft =  new Vector2(rec.min[0], rec.max[1]);
+        var topRight = new Vector2(rec.max[0], rec.max[1]);
+        var bottomRight = new Vector2(rec.max[0], rec.min[1]);
+
+        var walls = transform.GetChild(0).gameObject;
+        var collider = walls.GetComponent<EdgeCollider2D>();
+        var edgePoints = new [] {bottomLeft,topLeft,topRight,bottomRight, bottomLeft};
+        Debug.Log("Bounds " + edgePoints[0] + " " + edgePoints[1] + " " + edgePoints[2] + " " + edgePoints[3] + " " + edgePoints[4] + " ");
+        collider.points = edgePoints;
     }
 
     // Update is called once per frame

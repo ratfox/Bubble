@@ -59,7 +59,8 @@ public class ShotScript : MonoBehaviour
     }
 
     private void OnTriggerEnter2D(Collider2D collider) {
-        Debug.Log("Crash of " + this.gameObject.name + " and " + collider.gameObject.name);
+        Debug.Log("Crash of " + this.gameObject.name + " and " + collider.gameObject.name
+          + " at " + transform.position);
         if (collider.gameObject.CompareTag("Shots")) {
             var item = collider.gameObject;
             if (item.name.StartsWith("SingleShot")) {
