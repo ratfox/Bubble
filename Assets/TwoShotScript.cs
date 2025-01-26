@@ -11,11 +11,13 @@ public class TwoShotScript : MonoBehaviour
     private float slowDownFactor = 0.96f;
     private float rotationSpeed = 40f;
     public int shotId;
+    private float creationTime;
+    private float duration = 4f;
 
     // Start is called before the first frame update
     void Start()
     {
-        
+        creationTime = Time.time;
     }
 
     // Update is called once per frame
@@ -27,6 +29,9 @@ public class TwoShotScript : MonoBehaviour
         var rot = transform.rotation;
         rot *= Quaternion.Euler(0, 0, rotationSpeed);
         transform.rotation = Quaternion.Slerp(transform.rotation, rot, Time.deltaTime);
+        if (Time.time - creationTime > duration) {
+            Destroy(this.gameObject);
+        }
     }
 
     void FixedUpdate() {
@@ -46,6 +51,11 @@ public class TwoShotScript : MonoBehaviour
             }
         } else if (collider.gameObject.name.StartsWith("Walls")) {
             Destroy(this.gameObject);
+        } else if (collider.gameObject.name.StartsWith("Fog")) {
+            if (collider.gameObject.GetComponent<FogScript>().dense) {
+                collider.gameObject.GetComponent<FogScript>().Hit();
+                Destroy(this.gameObject);
+            }
         }
     }
 }

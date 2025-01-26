@@ -110,7 +110,8 @@ public class circleControl : MonoBehaviour
         } else if (collider.gameObject.name.StartsWith("Walls")) {
             GameOver();
         } else if (collider.gameObject.name.StartsWith("Fog")) {
-            if (collider.gameObject.GetComponent<FogScript>().dense) {
+            if (collider.gameObject.GetComponent<FogScript>().dense &&
+                collider.gameObject.GetComponent<FogScript>().lethal) {
                 GameOver();
             }
         } else if (collider.gameObject.name.StartsWith("Goal")) {

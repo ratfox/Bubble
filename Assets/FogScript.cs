@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class FogScript : MonoBehaviour
 {
+    public bool lethal;
     public bool dense;
     List<FogScript> touching = new List<FogScript>();
     FogScript startedTouching = null;
