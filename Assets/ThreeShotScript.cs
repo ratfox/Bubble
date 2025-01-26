@@ -15,6 +15,8 @@ public class ThreeShotScript : MonoBehaviour
     private float creationTime;
     private float duration = 10f;
     public GameObject explosionPrefab;
+    private Vector3 influenceSum;
+    private float influenceRate = 0.01f;
 
     // Start is called before the first frame update
     void Start()
@@ -43,6 +45,9 @@ public class ThreeShotScript : MonoBehaviour
     }
 
     void FixedUpdate() {
+        var newMovement = direction * speed + influenceSum * influenceRate;
+        direction = newMovement.normalized;
+        speed = newMovement.magnitude;
         speed = Mathf.Max(minSpeed, speed * slowDownFactor);
         rotationSpeed = rotationSpeed * rotationSlowDownFactor;
     }
@@ -61,6 +66,17 @@ public class ThreeShotScript : MonoBehaviour
             if (collider.gameObject.GetComponent<FogScript>().dense) {
                 collider.gameObject.GetComponent<FogScript>().Hit();
             }
+        } else if (collider.gameObject.name.StartsWith("Fan")) {
+            var influence = collider.gameObject.GetComponent<FanScript>().movement;
+            influenceSum += influence;
+            Debug.Log("Start Influence is " + influenceSum);
+        }
+    }
+    private void OnTriggerExit2D(Collider2D collider) {
+        if (collider.gameObject.name.StartsWith("Fan")) {
+            var influence = collider.gameObject.GetComponent<FanScript>().movement;
+            influenceSum -= influence;
+            Debug.Log("End Influence is " + influenceSum);
         }
     }
 }

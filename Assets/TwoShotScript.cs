@@ -13,6 +13,8 @@ public class TwoShotScript : MonoBehaviour
     public int shotId;
     private float creationTime;
     private float duration = 4f;
+    private Vector3 influenceSum;
+    private float influenceRate = 0.01f;
 
     // Start is called before the first frame update
     void Start()
@@ -35,8 +37,10 @@ public class TwoShotScript : MonoBehaviour
     }
 
     void FixedUpdate() {
+        var newMovement = direction * speed + influenceSum * influenceRate;
+        direction = newMovement.normalized;
+        speed = newMovement.magnitude;
         speed = Mathf.Max(minSpeed, speed * slowDownFactor);
-//        Debug.Log("speed " + speed);
     }
     private void OnTriggerEnter2D(Collider2D collider) {
         Debug.Log("Crash of " + this.gameObject.name + " and " + collider.gameObject.name);
@@ -55,6 +59,17 @@ public class TwoShotScript : MonoBehaviour
             if (collider.gameObject.GetComponent<FogScript>().dense) {
                 collider.gameObject.GetComponent<FogScript>().Hit();
             }
+        } else if (collider.gameObject.name.StartsWith("Fan")) {
+            var influence = collider.gameObject.GetComponent<FanScript>().movement;
+            influenceSum += influence;
+            Debug.Log("Start Influence is " + influenceSum);
+        }
+    }
+    private void OnTriggerExit2D(Collider2D collider) {
+        if (collider.gameObject.name.StartsWith("Fan")) {
+            var influence = collider.gameObject.GetComponent<FanScript>().movement;
+            influenceSum -= influence;
+            Debug.Log("End Influence is " + influenceSum);
         }
     }
 }

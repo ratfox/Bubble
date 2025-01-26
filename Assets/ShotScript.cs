@@ -19,6 +19,8 @@ public class ShotScript : MonoBehaviour
     public AudioClip pop2;
     public AudioClip pop3;
     private AudioSource audioSource;
+    private Vector3 influenceSum;
+    private float influenceRate = 0.01f;
 
     // Start is called before the first frame update
     void Start() {
@@ -55,6 +57,9 @@ public class ShotScript : MonoBehaviour
         }
     }
     void FixedUpdate() {
+        var newMovement = direction * speed + influenceSum * influenceRate;
+        direction = newMovement.normalized;
+        speed = newMovement.magnitude;
         speed = Mathf.Max(minSpeed, speed * slowDownFactor);
     }
 
@@ -100,6 +105,17 @@ public class ShotScript : MonoBehaviour
                 collider.gameObject.GetComponent<FogScript>().Hit();
                 Destroy(this.gameObject);
             }
+        } else if (collider.gameObject.name.StartsWith("Fan")) {
+            var influence = collider.gameObject.GetComponent<FanScript>().movement;
+            influenceSum += influence;
+            Debug.Log("Start Influence is " + influenceSum);
         }
-    }    
+    }
+    private void OnTriggerExit2D(Collider2D collider) {
+        if (collider.gameObject.name.StartsWith("Fan")) {
+            var influence = collider.gameObject.GetComponent<FanScript>().movement;
+            influenceSum -= influence;
+            Debug.Log("End Influence is " + influenceSum);
+        }
+    }
 }
